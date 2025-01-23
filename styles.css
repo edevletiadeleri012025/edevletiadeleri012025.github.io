@@ -1,0 +1,238 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: white;
+    color: black;
+    padding: 20px;
+    text-align: center;
+}
+
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.left-side {
+    width: 50%;
+    background-color: #e0e0e0;
+    padding: 20px;
+}
+
+.red-text {
+    color: red;
+}
+
+.black-text {
+    color: black;
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.right-side {
+    width: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+footer {
+    background-color: white;
+    padding: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin: 10px 0 5px;
+}
+
+input, select {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+#confirmation-message {
+    text-align: center;
+    color: green;
+    font-size: 16px;
+}
+
+.hidden {
+    display: none;
+}
+#bank {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.bank-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.bank-option input[type="checkbox"] {
+    margin-right: 10px;
+    transform: scale(1.2); /* Checkbox boyutunu büyütmek için */
+}
+
+.bank-option label {
+    font-size: 16px;
+}
+
+/* Genel stil */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+/* Header */
+header {
+    background-color: white;
+    color: black;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Main container: Flex düzen */
+.main-container {
+    display: flex;
+    flex-wrap: wrap; /* Cihazlar küçükse kutular alt alta sıralanır */
+    justify-content: space-between;
+    padding: 20px;
+}
+
+/* Left side */
+.left-side {
+    width: 48%;
+    background-color: #e0e0e0;
+    padding: 20px;
+}
+
+/* Right side */
+.right-side {
+    width: 48%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Footer */
+footer {
+    background-color: white;
+    padding: 20px;
+}
+
+/* Form stil */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin: 10px 0 5px;
+}
+
+input, select {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Buton */
+button {
+    padding: 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+/* Mobil ve küçük ekranlar için */
+@media screen and (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .left-side, .right-side {
+        width: 90%;
+        margin-bottom: 20px;
+    }
+
+    .bank-option input[type="checkbox"] {
+        transform: scale(1.5); /* Mobilde checkbox boyutunu büyütme */
+    }
+
+    button {
+        font-size: 16px; /* Mobilde buton yazı boyutunu küçültme */
+    }
+
+    label {
+        font-size: 14px; /* Mobilde etiket yazı boyutunu küçültme */
+    }
+}
+
+/* Masaüstü ve büyük ekranlar için (varsayılan stil) */
+@media screen and (min-width: 769px) {
+    .main-container {
+        flex-direction: row;
+    }
+
+    .left-side, .right-side {
+        width: 48%;
+    }
+
+    .bank-option input[type="checkbox"] {
+        transform: scale(1.2); /* Masaüstü için normal checkbox boyutu */
+    }
+
+    button {
+        font-size: 18px; /* Masaüstü buton yazı boyutunu büyütme */
+    }
+
+    label {
+        font-size: 16px; /* Masaüstü etiket yazı boyutunu büyütme */
+    }
+}

